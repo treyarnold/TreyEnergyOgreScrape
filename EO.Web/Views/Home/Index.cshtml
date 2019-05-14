@@ -1,0 +1,64 @@
+﻿@model EO.Web.Models.HomeModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-2">
+            <img src="/Content/images/the-ogre.png" class="img-responsive" />
+        </div>
+        <div class="col-md-10">
+            <h1>The Ogre's Sandbox</h1>
+        </div>
+    </div>
+</div>
+
+    <h1 class="text-center">Welcome to Energy Ogre</h1>
+
+@if (Model.Zipcode == null)
+{
+    using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        <div class="input-group">
+            @Html.TextBoxFor(model => model.Zipcode, new { @class = "ml-auto form-control" });
+            <div class="mr-auto input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Find Your New Best Rate</button>
+            </div>        
+        </div>
+    }
+}
+else if (Model.Rates == null)
+{
+    <h1>@Model.Zipcode</h1>
+    <h2>Searching for your best rates...</h2>
+}
+else
+{ 
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Term</th>
+                <th scope="col">Rate/KWH</th>
+                <th scope="col">Description</th>
+                <th scope="col">Facts Sheet</th>
+                <th scope="col">Enroll</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var rate in Model.Rates)
+            {
+                <tr>
+                    <td>@rate.Product</td>
+                    <td>@rate.Term</td>
+                    <td>@rate.RatePerKWH</td>
+                    <td>@rate.Product</td>
+                    <td><a class="btn btn-outline-info" href=@rate.FactsURL target="_blank" role="button">Fact Sheet</a></td>
+                    <td><a class="btn btn-outline-success" href=@rate.EnrollURL role="button">Enroll</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
