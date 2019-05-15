@@ -13,25 +13,29 @@ namespace EO.Web.Models
     {
         public string Zipcode { get; set; }
         public string results;
-        public List<Rate> Rates;
+        public List<Rate> Rates = new List<Rate>();
+        public bool empty = true;
 
         public class Rate
         {
             public string Product { get; set; }
-            public int Term { get; set; }
+            public string Term { get; set; }
             public string RatePerKWH { get; set; }
-            public List<string> PromotionDesc { get; set; }
+            public List<string> PromotionDesc = new List<string>();
             public string EnrollURL { get; set; }
             public string FactsURL { get; set; }
         }
 
         public void GetRates()
         {
+            
             ChromeOptions option = new ChromeOptions();
             option.AddArgument("--headless");
 
             using (var driver = new ChromeDriver(option))
             {
+                driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(20);
+
                 driver.Navigate().GoToUrl("https://www.firstchoicepower.com/");
 
                 var zipCodeField = driver.FindElementByClassName("zipcode");
@@ -41,24 +45,41 @@ namespace EO.Web.Models
 
                 searchButton.Click();
 
-                var allPlans = driver.FindElementByXPath("//*[@id=\"tab_11\"]");
-                var flippers = allPlans.FindElements(By.ClassName("flipper")).ToList();
 
-                foreach (var card in flippers)
+                for (var i = 1; i <= 3; i++)
                 {
-                    Rate currentRate = new Rate();
-                    currentRate.RatePerKWH = card.FindElement(By.ClassName("price-container")).FindElement(By.TagName("span")).Text;
-                    currentRate.Product = card.FindElement(By.ClassName("gridDescription")).Text;
-                    card.FindElements(By.ClassName("bullet-hover")).ToList().ForEach(item =>
+                    for (var j = 1; j <= 3; j++)
                     {
-                        string description = item.Text;
-                        currentRate.PromotionDesc.Add(description);
-                    });
-                    currentRate.EnrollURL = "#";
-                    currentRate.Term = 0;
-                    currentRate.FactsURL = card.FindElement(By.ClassName("efl_label")).GetAttribute("href");
-                    Rates.Add(currentRate);                    
+                        Rate currentRate = new Rate();
+                        currentRate.RatePerKWH = driver.FindElementByXPath($"//*[@id=\"tab_11\"]/div[{i}]/div[{j}]/div/div/div[2]/h4/span").GetAttribute("innerText");
+                        currentRate.Product = driver.FindElementByXPath($"//*[@id=\"tab_11\"]/div[{i}]/div[{j}]/div/div/h3/span").GetAttribute("innerText");
+
+                        for (var x = 1; x <= 2; x++)
+                        {
+                            string description = driver.FindElementByXPath($"//*[@id=\"tab_11\"]/div[{i}]/div[{j}]/div/div/ul/li[{x}]/div").GetAttribute("innerText");
+                            currentRate.PromotionDesc.Add(description);
+                        }
+                                                
+                        if (currentRate.Product[0] == 'Y')
+                        {
+                            currentRate.Term = currentRate.Product.Substring(currentRate.Product.Length - 2);
+                        }
+                        else if (currentRate.Product[0] == 'M')
+                        {
+                            currentRate.Term = "Month to Month";
+                        }
+                        else
+                        {
+                            currentRate.Term = "Prepaid";
+                        }
+                        
+                        //currentRate.Term = "0";
+                        currentRate.EnrollURL = "#";
+                        currentRate.FactsURL = driver.FindElementByXPath($"//*[@id=\"tab_11\"]/div[{i}]/div[{j}]/div/div/div[3]/a[3]").GetAttribute("href");
+                        Rates.Add(currentRate);
+                    }
                 }
+                empty = false;                
             }
         }
 
