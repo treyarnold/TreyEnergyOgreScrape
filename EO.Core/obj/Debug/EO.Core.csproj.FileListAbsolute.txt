@@ -1,0 +1,13 @@
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\bin\Debug\EO.Core.exe.config
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\bin\Debug\EO.Core.exe
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\bin\Debug\EO.Core.pdb
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\bin\Debug\HtmlAgilityPack.dll
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\bin\Debug\Newtonsoft.Json.dll
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\bin\Debug\HtmlAgilityPack.xml
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\bin\Debug\Newtonsoft.Json.xml
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\obj\Debug\EO.Core.csprojAssemblyReference.cache
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\obj\Debug\EO.Core.csproj.CoreCompileInputs.cache
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\obj\Debug\EO.Core.csproj.CopyComplete
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\obj\Debug\EO.Core.exe
+C:\Users\arnol\Dev\EnergyOgre-SandBox-RateScraper\EO.Core\obj\Debug\EO.Core.pdb
